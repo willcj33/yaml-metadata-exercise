@@ -63,6 +63,12 @@ func (store *MetadataStore) GetDocument(id string) *models.ApplicationMetadata {
 	return returnObj
 }
 
+//Delete deletes the original document stored and the index
+func (store *MetadataStore) Delete(id string) {
+	store.index.Delete(id)
+	store.index.DeleteInternal([]byte(id))
+}
+
 func createMappings() *mapping.IndexMappingImpl {
 	indexMapping := bleve.NewIndexMapping()
 

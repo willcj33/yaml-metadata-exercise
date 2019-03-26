@@ -31,7 +31,7 @@ func NewMetadataServer(cfg config.Config) *MetadataServer {
 		Health(w, r)
 	})
 	server.addRoute("/application/metadata", http.MethodPost, PostMetadata)
-	server.addRoute("/application/metadata", http.MethodPut, PutMetadata)
+	server.addRoute("/application/metadata", http.MethodDelete, DeleteMetadata)
 	server.addRoute("/application/metadata", http.MethodGet, GetMetadata)
 
 	return server
@@ -57,16 +57,16 @@ func (server *MetadataServer) addRoute(route, method string, handlerFunc httpHan
 		server.routes[method][route] = httpGet(handlerFunc, server.store, server.config)
 	case http.MethodPost:
 		server.routes[method][route] = httpPost(handlerFunc, server.store, server.config)
-	case http.MethodPut:
-		server.routes[method][route] = httpPut(handlerFunc, server.store, server.config)
+	case http.MethodDelete:
+		server.routes[method][route] = httpDelete(handlerFunc, server.store, server.config)
 	default:
 		fmt.Printf("Could not add route: %s:%s", method, route)
 	}
 }
 
-func httpPut(next httpHandlerWithStore, store *db.MetadataStore, cfg config.Config) http.Handler {
+func httpDelete(next httpHandlerWithStore, store *db.MetadataStore, cfg config.Config) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPut {
+		if r.Method != http.MethodDelete {
 			http.Error(w, "Not Found", http.StatusNotFound)
 			return
 		}
