@@ -8,7 +8,7 @@ import (
 )
 
 //PutMetadata updates application metadata
-func PutMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore, config config.Config) {
+func DeleteMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore, config config.Config) {
 	w.Header().Set("Content-Type", "application/text")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Get Data"))
