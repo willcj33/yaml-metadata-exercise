@@ -6,12 +6,13 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/willcj33/yaml-metadata-exercise/config"
 	"github.com/willcj33/yaml-metadata-exercise/db"
 	"github.com/willcj33/yaml-metadata-exercise/models"
 )
 
 //PostMetadata creates application metadata
-func PostMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore) {
+func PostMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore, config config.Config) {
 	var requestBody []byte
 	applicationMetadata := &models.ApplicationMetadata{}
 
@@ -34,7 +35,7 @@ func PostMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStor
 		http.Error(w, fmt.Sprintf("%v", validationErrors), http.StatusBadRequest)
 		return
 	}
-	id := applicationMetadata.GetID()
+	id := applicationMetadata.GetID(config)
 	store.Write(id, applicationMetadata)
 	w.Header().Set("Content-Type", "application/text")
 	w.WriteHeader(http.StatusOK)

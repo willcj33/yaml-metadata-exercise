@@ -9,6 +9,9 @@ type Config struct {
 	ServerName     string `env:"SERVER_NAME" envDefault:"application.metadata.exercise"`
 	HTTPListenHost string `env:"SERVER_HOST" envDefault:"127.0.0.1"`
 	HTTPListenPort string `env:"SERVER_PORT" envDefault:"8071"`
+	StorageMode    string `env:"STORAGE_MODE" envDefault:"multiple"`
+	//Make sure Identifier fields are pascal cased
+	IdentifierFields []string `env:"IDENTIFIER_FIELDS" envSeparator:"," envDefault:"Title,Source"`
 }
 
 // GetConfig - Method for getting config and laoding from envrionment variables

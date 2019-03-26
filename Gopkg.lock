@@ -115,6 +115,14 @@
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:af43bdaaf86655a2343f113e9b293bbc16b12099eaeb223982bbe4d4c22ba14d"
+  name = "github.com/fatih/structs"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4966fc68f5b7593aafa6cbbba2d65ec6e1416047"
+  version = "v1.1.0"
+
+[[projects]]
   branch = "master"
   digest = "1:dc925a7d0f70e394be6a79f060b06dfdecfabdc88cfd1cfa1c9d9462c6edca1f"
   name = "github.com/glycerine/go-unsnap-stream"
@@ -220,7 +228,7 @@
   name = "golang.org/x/net"
   packages = ["context"]
   pruneopts = "UT"
-  revision = "addf6b3196f61cd44ce5a76657913698c73479d0"
+  revision = "e3b2ff56ed879efa686c9d09ed74f9bfe42f1a1d"
 
 [[projects]]
   branch = "master"
@@ -257,7 +265,9 @@
   analyzer-version = 1
   input-imports = [
     "github.com/blevesearch/bleve",
+    "github.com/blevesearch/bleve/mapping",
     "github.com/caarlos0/env",
+    "github.com/fatih/structs",
     "github.com/go-playground/locales/en",
     "github.com/go-playground/universal-translator",
     "github.com/gorilla/mux",
