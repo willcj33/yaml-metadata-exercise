@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -60,7 +60,7 @@ func (server *MetadataServer) addRoute(route, method string, handlerFunc httpHan
 	case http.MethodDelete:
 		server.routes[method][route] = httpDelete(handlerFunc, server.store, server.config)
 	default:
-		fmt.Printf("Could not add route: %s:%s", method, route)
+		log.Printf("Could not add route: %s:%s", method, route)
 	}
 }
 

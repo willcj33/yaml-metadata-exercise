@@ -3,9 +3,9 @@ package models
 import (
 	"encoding/base64"
 	"sort"
+	"strconv"
 	"strings"
 
-	"github.com/fatih/structs"
 	"github.com/willcj33/yaml-metadata-exercise/config"
 	"github.com/willcj33/yaml-metadata-exercise/services"
 	validator "gopkg.in/go-playground/validator.v9"
@@ -23,24 +23,83 @@ type ApplicationMetadata struct {
 	Description string        `validate:"required" yaml:"description" json:"description"`
 }
 
+func (am *ApplicationMetadata) GetCamelField(key string) string {
+	cleanStr := strings.Replace(strings.Replace(strings.Replace(key, "[", ".", 1), "]", "", 1), "applicationMetadata.", "", 1)
+	spl := strings.Split(cleanStr, ".")
+	switch spl[0] {
+	case "title":
+		return am.Title
+	case "version":
+		return am.Version
+	case "maintainers":
+		index, _ := strconv.ParseInt(spl[1], 10, 32)
+		switch spl[2] {
+		case "name":
+			return am.Maintainers[index].Name
+		case "email":
+			return am.Maintainers[index].Email
+		}
+	case "company":
+		return am.Company
+	case "website":
+		return am.Website
+	case "source":
+		return am.Source
+	case "license":
+		return am.License
+	case "description":
+		return am.Description
+	}
+	return ""
+}
+
+func (am *ApplicationMetadata) GetPascalField(key string) string {
+	cleanStr := strings.Replace(strings.Replace(strings.Replace(key, "[", ".", 1), "]", "", 1), "ApplicationMetadata.", "", 1)
+	spl := strings.Split(cleanStr, ".")
+	switch spl[0] {
+	case "Title":
+		return am.Title
+	case "Version":
+		return am.Version
+	case "Maintainers":
+		index, _ := strconv.ParseInt(spl[1], 10, 32)
+		switch spl[2] {
+		case "Name":
+			return am.Maintainers[index].Name
+		case "Email":
+			return am.Maintainers[index].Email
+		}
+	case "Company":
+		return am.Company
+	case "Website":
+		return am.Website
+	case "Source":
+		return am.Source
+	case "License":
+		return am.License
+	case "Description":
+		return am.Description
+	}
+	return ""
+}
+
 func (am *ApplicationMetadata) GetID(cfg config.Config) string {
 	if cfg.StorageMode == "single" {
 		return "application_metadata"
 	}
-	objectMap := structs.Map(am)
 	identifierBuilder := []string{}
 	for _, key := range cfg.IdentifierFields {
-		if key == "Maintainers.Email" {
+		if key == "maintainers.email" {
 			for _, maintainer := range am.Maintainers {
 				identifierBuilder = append(identifierBuilder, maintainer.Email)
 			}
-		} else if key == "Maintainers.Name" {
+		} else if key == "maintainers.name" {
 			for _, maintainer := range am.Maintainers {
 				identifierBuilder = append(identifierBuilder, maintainer.Name)
 			}
 		} else {
-			if objectMap[key] != nil {
-				identifierBuilder = append(identifierBuilder, objectMap[key].(string))
+			if am.GetCamelField(key) != "" {
+				identifierBuilder = append(identifierBuilder, am.GetCamelField(key))
 			}
 		}
 	}

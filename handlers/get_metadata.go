@@ -31,8 +31,6 @@ func GetMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore
 		for i, hit := range res.Hits {
 			ids[i] = hit.ID
 		}
-		w.Header().Set("Content-Type", "application/x-yaml")
-		w.WriteHeader(http.StatusOK)
 		if fill != "" {
 			var results = make([]interface{}, len(res.Hits))
 			for i, hit := range res.Hits {
@@ -70,10 +68,13 @@ func GetMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore
 			}
 		}
 		var b []byte
+		w.WriteHeader(http.StatusOK)
 		switch urlQuery.Get("format") {
 		case "json":
+			w.Header().Set("Content-Type", "application/json")
 			b, _ = json.Marshal(results)
 		default:
+			w.Header().Set("Content-Type", "application/x-yaml")
 			b, _ = yaml.Marshal(results)
 		}
 		w.Write(b)

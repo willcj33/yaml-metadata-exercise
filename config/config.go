@@ -11,7 +11,7 @@ type Config struct {
 	HTTPListenPort string `env:"SERVER_PORT" envDefault:"8071"`
 	StorageMode    string `env:"STORAGE_MODE" envDefault:"multiple"`
 	//Make sure Identifier fields are pascal cased
-	IdentifierFields []string `env:"IDENTIFIER_FIELDS" envSeparator:"," envDefault:"Title,Source"`
+	IdentifierFields []string `env:"IDENTIFIER_FIELDS" envSeparator:"," envDefault:"title,source"`
 }
 
 // GetConfig - Method for getting config and laoding from envrionment variables
