@@ -24,9 +24,9 @@ var storeOnce sync.Once
 //GetStore gets the singleton store instance
 func GetStore(config config.Config) *MetadataStore {
 	storeOnce.Do(func() {
-		if index, err := bleve.Open("applicationMetadata.bleve"); err != nil {
+		if index, err := bleve.Open(config.IndexName); err != nil {
 			mapping := createMappings()
-			newIndex, _ := bleve.New("applicationMetadata.bleve", mapping)
+			newIndex, _ := bleve.New(config.IndexName, mapping)
 			storeInstance = &MetadataStore{
 				index: newIndex,
 			}
@@ -41,8 +41,8 @@ func GetStore(config config.Config) *MetadataStore {
 
 //Query searches the metadata
 func (store *MetadataStore) Query(q string) (*bleve.SearchResult, error) {
-	query := bleve.NewQueryStringQuery(q)
-	search := bleve.NewSearchRequest(query)
+	var search *bleve.SearchRequest
+	search = bleve.NewSearchRequest(bleve.NewQueryStringQuery(q))
 	search.IncludeLocations = true
 	search.Fields = []string{"*"}
 	return store.index.Search(search)

@@ -20,6 +20,7 @@ type MetadataServer struct {
 	store  *db.MetadataStore
 }
 
+//NewMetadataServer creates the new metadata server instance
 func NewMetadataServer(cfg config.Config) *MetadataServer {
 	server := &MetadataServer{
 		routes: map[string]map[string]http.Handler{},
@@ -37,6 +38,7 @@ func NewMetadataServer(cfg config.Config) *MetadataServer {
 	return server
 }
 
+//CreateMux creates the mux to handle routes for the metadata server
 func (server *MetadataServer) CreateMux() http.Handler {
 	serverMux := mux.NewRouter()
 	for method, routes := range server.routes {

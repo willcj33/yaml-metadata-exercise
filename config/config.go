@@ -10,6 +10,7 @@ type Config struct {
 	HTTPListenHost string `env:"SERVER_HOST" envDefault:"127.0.0.1"`
 	HTTPListenPort string `env:"SERVER_PORT" envDefault:"8071"`
 	StorageMode    string `env:"STORAGE_MODE" envDefault:"multiple"`
+	IndexName      string `env:"STORAGE_MODE" envDefault:"applicationMetadata.bleve"`
 	//Make sure Identifier fields are pascal cased
 	IdentifierFields []string `env:"IDENTIFIER_FIELDS" envSeparator:"," envDefault:"title,source"`
 }

@@ -12,6 +12,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//ApplicationMetadata is the struct that holds the application metadata
 type ApplicationMetadata struct {
 	Title       string        `validate:"required" yaml:"title" json:"title"`
 	Version     string        `validate:"required" yaml:"version" json:"version"`
@@ -23,6 +24,7 @@ type ApplicationMetadata struct {
 	Description string        `validate:"required" yaml:"description" json:"description"`
 }
 
+//GetCamelField gets the value of the field at the respective camel cased key
 func (am *ApplicationMetadata) GetCamelField(key string) string {
 	cleanStr := strings.Replace(strings.Replace(strings.Replace(key, "[", ".", 1), "]", "", 1), "applicationMetadata.", "", 1)
 	spl := strings.Split(cleanStr, ".")
@@ -53,6 +55,7 @@ func (am *ApplicationMetadata) GetCamelField(key string) string {
 	return ""
 }
 
+//GetPascalField gets the value of the field at the respective pascal cased key
 func (am *ApplicationMetadata) GetPascalField(key string) string {
 	cleanStr := strings.Replace(strings.Replace(strings.Replace(key, "[", ".", 1), "]", "", 1), "ApplicationMetadata.", "", 1)
 	spl := strings.Split(cleanStr, ".")
@@ -83,6 +86,7 @@ func (am *ApplicationMetadata) GetPascalField(key string) string {
 	return ""
 }
 
+//GetID gets the generated identifier of the application metadata
 func (am *ApplicationMetadata) GetID(cfg config.Config) string {
 	if cfg.StorageMode == "single" {
 		return "application_metadata"
@@ -108,6 +112,7 @@ func (am *ApplicationMetadata) GetID(cfg config.Config) string {
 	return s
 }
 
+//FromYaml populates the application metadata object from a yaml []byte payload
 func (am *ApplicationMetadata) FromYaml(content []byte) error {
 	if err := yaml.Unmarshal(content, am); err != nil {
 		return err
@@ -115,6 +120,7 @@ func (am *ApplicationMetadata) FromYaml(content []byte) error {
 	return nil
 }
 
+//Validate validates the application metadata object based on our rules
 func (am *ApplicationMetadata) Validate() validator.ValidationErrorsTranslations {
 	validationInstance := services.GetValidator()
 	if err := validationInstance.Service.Struct(am); err != nil {

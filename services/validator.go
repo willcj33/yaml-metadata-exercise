@@ -52,6 +52,7 @@ func GetValidator() *Validator {
 	return validatorInstance
 }
 
+//ValidateURL is our custom implementation of the validation rule for urls
 func ValidateURL(fl validator.FieldLevel) bool {
 	str := fl.Field().String()
 	u, err := url.Parse(str)
@@ -67,6 +68,7 @@ func ValidateURL(fl validator.FieldLevel) bool {
 	return urlRegex.MatchString(str)
 }
 
+//Translate is used to translate the error thrown back from the validator to a useable format
 func (v *Validator) Translate(err error) validator.ValidationErrorsTranslations {
 	validationErrors := err.(validator.ValidationErrors)
 	return validationErrors.Translate(v.translator)
