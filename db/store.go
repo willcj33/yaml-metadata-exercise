@@ -2,6 +2,8 @@ package db
 
 import (
 	"encoding/json"
+	"fmt"
+	"strings"
 	"sync"
 
 	"github.com/willcj33/yaml-metadata-exercise/models"
@@ -41,11 +43,47 @@ func GetStore(config config.Config) *MetadataStore {
 
 //Query searches the metadata
 func (store *MetadataStore) Query(q string) (*bleve.SearchResult, error) {
-	var search *bleve.SearchRequest
-	search = bleve.NewSearchRequest(bleve.NewQueryStringQuery(q))
-	search.IncludeLocations = true
-	search.Fields = []string{"*"}
-	return store.index.Search(search)
+	resultMap := sync.Map{}
+	wg := sync.WaitGroup{}
+
+	wg.Add(1)
+	go func() {
+		var search *bleve.SearchRequest
+		spl := strings.Split(q, ":")
+		finalQ := spl[0]
+		if len(spl) > 1 {
+			finalQ = spl[1]
+		}
+		search = bleve.NewSearchRequest(bleve.NewWildcardQuery(fmt.Sprintf("*%s*", finalQ)))
+		search.IncludeLocations = true
+		search.Fields = []string{"*"}
+		res, _ := store.index.Search(search)
+		resultMap.Store("wildcard", res)
+		wg.Done()
+	}()
+
+	wg.Add(1)
+	go func() {
+		var search *bleve.SearchRequest
+		search = bleve.NewSearchRequest(bleve.NewQueryStringQuery(q))
+		search.IncludeLocations = true
+		search.Fields = []string{"*"}
+		res, _ := store.index.Search(search)
+		resultMap.Store("queryString", res)
+		wg.Done()
+	}()
+
+	wg.Wait()
+
+	var results *bleve.SearchResult
+	resultMap.Range(func(k interface{}, v interface{}) bool {
+		value := v.(*bleve.SearchResult)
+		if results == nil || results.Total == 0 || (value.Total < results.Total && value.Total != 0) {
+			results = value
+		}
+		return true
+	})
+	return results, nil
 }
 
 //Write searches the metadata
@@ -75,40 +113,31 @@ func createMappings() *mapping.IndexMappingImpl {
 	metadataMapping := bleve.NewDocumentMapping()
 
 	titleMapping := bleve.NewTextFieldMapping()
-	titleMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("title", titleMapping)
 
 	versionMapping := bleve.NewTextFieldMapping()
-	versionMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("version", versionMapping)
 
 	maintainerMapping := bleve.NewDocumentMapping()
 	maintainerNameMapping := bleve.NewTextFieldMapping()
-	maintainerNameMapping.Analyzer = "en"
 	maintainerMapping.AddFieldMappingsAt("name", maintainerNameMapping)
 	maintainerEmailMapping := bleve.NewTextFieldMapping()
-	maintainerEmailMapping.Analyzer = "en"
 	maintainerMapping.AddFieldMappingsAt("email", maintainerEmailMapping)
 	metadataMapping.AddSubDocumentMapping("maintainer", maintainerMapping)
 
 	companyMapping := bleve.NewTextFieldMapping()
-	companyMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("company", companyMapping)
 
 	websiteMapping := bleve.NewTextFieldMapping()
-	websiteMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("website", websiteMapping)
 
 	sourceMapping := bleve.NewTextFieldMapping()
-	sourceMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("source", sourceMapping)
 
 	licenseMapping := bleve.NewTextFieldMapping()
-	licenseMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("license", licenseMapping)
 
 	descriptionMapping := bleve.NewTextFieldMapping()
-	descriptionMapping.Analyzer = "en"
 	metadataMapping.AddFieldMappingsAt("description", descriptionMapping)
 
 	indexMapping.AddDocumentMapping("metadata", metadataMapping)

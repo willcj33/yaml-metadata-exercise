@@ -71,20 +71,18 @@
   version = "v1.0.2"
 
 [[projects]]
-  branch = "master"
-  digest = "1:e2a3505121c69765ccab66f72553c165150b0de22ecb7eca80dd9e26c61fc12e"
+  digest = "1:15330cc03ff3465f79883a77312e65137fb79e0a4faef446d2dc6b8f71d54c42"
   name = "github.com/blevesearch/segment"
   packages = ["."]
   pruneopts = "UT"
-  revision = "762005e7a34fd909a84586299f1dd457371d36ee"
+  revision = "db70c57796cc8c310613541dfade3dce627d09c7"
 
 [[projects]]
-  digest = "1:0f98f59e9a2f4070d66f0c9c39561f68fcd1dc837b22a852d28d0003aebd1b1e"
+  digest = "1:8a94a15cd36028e52e4acb843458efb7c8e4a06795591f47f8e4e436a7320459"
   name = "github.com/boltdb/bolt"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2f1ce7a837dcb8da3ec595b1dac9d0632f0f99e8"
-  version = "v1.3.1"
+  revision = "9da31745363232bc1e27dbab3569e77383a51585"
 
 [[projects]]
   digest = "1:2f7daa1bfbcd83e7f15933f01dd8306fe9a9b9d509d574f39bba9b0a67605b05"
@@ -96,7 +94,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:9ad2e6fc1f8f3e478ea342ebbc94d28db70d125e3575384e3c427783a0310647"
+  digest = "1:ee3656c40a0dc683f36c939970827298cb2241e759f546bee06de348f8946e5d"
   name = "github.com/couchbase/vellum"
   packages = [
     ".",
@@ -104,7 +102,7 @@
     "utf8",
   ]
   pruneopts = "UT"
-  revision = "e91b68ff3efe3cc11723aa25dd315cbc9276cd65"
+  revision = "462e86d8716b36a1397b30ef77fb11105065a232"
 
 [[projects]]
   digest = "1:edb569dd02419a41ddd98768cc0e7aec922ef19dae139731e5ca750afcf6f4c5"
@@ -113,14 +111,6 @@
   pruneopts = "UT"
   revision = "188cc3b666ba704534fa4f96e9e61f21f1e1ba7c"
   version = "v1.0.0"
-
-[[projects]]
-  digest = "1:af43bdaaf86655a2343f113e9b293bbc16b12099eaeb223982bbe4d4c22ba14d"
-  name = "github.com/fatih/structs"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "4966fc68f5b7593aafa6cbbba2d65ec6e1416047"
-  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
@@ -151,20 +141,18 @@
   version = "v0.16.0"
 
 [[projects]]
-  digest = "1:318f1c959a8a740366fce4b1e1eb2fd914036b4af58fbd0a003349b305f118ad"
+  digest = "1:8678e5fbb17ef2ba020f5369260d9adead06c4be5974e7aa556c245badbed139"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
-  version = "v1.3.1"
+  revision = "655cdfa588ea190e901bc5590e65d5621688847c"
 
 [[projects]]
-  digest = "1:e4f5819333ac698d294fe04dbf640f84719658d5c7ce195b10060cc37292ce79"
+  digest = "1:ffcba3b8daaaa29dd382bf24b62c5fce691de087a03dde25ed03b1dd02b8c6a8"
   name = "github.com/golang/snappy"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2a8bb927dd31d8daada140a5d09578521ce5c36a"
-  version = "v0.0.1"
+  revision = "cef980a12b316c5b7e5bb3a8e168eb43ae999a88"
 
 [[projects]]
   digest = "1:ca59b1175189b3f0e9f1793d2c350114be36eaabbe5b9f554b35edee1de50aea"
@@ -215,20 +203,18 @@
   version = "v1.1.0"
 
 [[projects]]
-  digest = "1:85ddc8a0e53c1ebe8ba228f2303fb156feffd8f2b4bead4d1d0af9c293c6054f"
+  digest = "1:542c6a724e70496d05fb3b40c45857fc0e353ed5f1c0ec4567fcf54c2f3b9619"
   name = "github.com/willf/bitset"
   packages = ["."]
   pruneopts = "UT"
-  revision = "20ad246f50b49590afcb1ed8ad143da7163869cb"
-  version = "v1.1.10"
+  revision = "5c3c0fce48842b2c0bbaa99b4e61b0175d84b47c"
 
 [[projects]]
-  branch = "master"
-  digest = "1:76ee51c3f468493aff39dbacc401e8831fbb765104cbf613b89bef01cf4bad70"
+  digest = "1:6ad30c4e66653ca512cc3f3894686fc4cdd17af1c7fd51603a10e1b31538ad81"
   name = "golang.org/x/net"
   packages = ["context"]
   pruneopts = "UT"
-  revision = "e3b2ff56ed879efa686c9d09ed74f9bfe42f1a1d"
+  revision = "e45385e9b226f570b1f086bf287b25d3d4117776"
 
 [[projects]]
   branch = "master"
@@ -267,7 +253,6 @@
     "github.com/blevesearch/bleve",
     "github.com/blevesearch/bleve/mapping",
     "github.com/caarlos0/env",
-    "github.com/fatih/structs",
     "github.com/go-playground/locales/en",
     "github.com/go-playground/universal-translator",
     "github.com/gorilla/mux",
