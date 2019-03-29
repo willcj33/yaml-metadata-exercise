@@ -46,7 +46,7 @@ All options below are read from cooresponding environment variables and will def
 
 ## Build/Run
 
-To build Yaml Metadata Exercise, be sure you have dep installed. Then run `make init`. This will initialize all dependencies in the `vendor` directory.
+To build Yaml Metadata Exercise, be sure you have dep installed. Then run `make ensure`. This will initialize all dependencies in the `vendor` directory.
 
 To test the project, run `make test`.
 
