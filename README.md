@@ -5,7 +5,6 @@
 All options below are read from cooresponding environment variables and will default to the stated default value:
 
 ```
-{
   // The name for the server, used for discovery, logging, etc...
   // DEFAULT: 'application.metadata.exercise'
   // TYPE: STRING
@@ -36,7 +35,6 @@ All options below are read from cooresponding environment variables and will def
   // DEFAULT: 'title,source'
   // TYPE: []STRING
   IDENTIFIER_FIELDS,
-}
 ```
 
 ### Prerequisites
@@ -99,7 +97,7 @@ like so: `make start SERVER_NAME=test INDEX_NAME=some.test`.
 
 **Delete Metadata**
 ----
-  Deletes the metadata matching the identifier key
+  Deletes the metadata matching the generated identifier key. You only need to pass the fields that are used to generate the identifier.
 
 **URL:**
   `/application/metadata`
