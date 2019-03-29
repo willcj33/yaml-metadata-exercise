@@ -23,6 +23,9 @@ func GetMetadata(w http.ResponseWriter, r *http.Request, store *db.MetadataStore
 	} else {
 		finalQ = fmt.Sprintf("%s", q)
 	}
+	if finalQ == "" {
+		fill = "true"
+	}
 	if res, err := store.Query(finalQ); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

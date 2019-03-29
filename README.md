@@ -146,9 +146,8 @@ like so: `make start SERVER_NAME=test INDEX_NAME=some.test`.
 
 **URL Params:**
 
-- required
-  - `query=[string]`
 - optional
+  - `query=[string]` -- searches for a match in your metadata, excluding en stopwords. If you leave it blank, it gets all metadata on the server
   - `format=[string]` -- yaml, json
     - default: yaml
     - returns the data in the selected format
